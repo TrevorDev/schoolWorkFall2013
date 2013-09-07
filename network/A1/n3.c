@@ -10,8 +10,8 @@ int main()
 {
 	int running = 1;
 	if(running){
-		char * message = getMessage("link1");
-	    printf("n2, message %s received\n", message);
+		char * message = getMessage("link2");
+	    printf("n3, message %s received\n", message);
 	    if(strcmp(message, "q")==0){
 	    	running=0;
 	    }
