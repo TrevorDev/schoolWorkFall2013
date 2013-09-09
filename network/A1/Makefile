@@ -15,7 +15,7 @@ SRCDIR = ./
 #Put the names of your source code files in the lines below.  You will need both your
 # Solution source code file and the source code with the main program in it
 
-SOURCE = $(SRCDIR)n1.c $(SRCDIR)n2.c $(SRCDIR)n3.c $(SRCDIR)messageHelper.c 
+SOURCE = $(SRCDIR)n1.c $(SRCDIR)n2.c $(SRCDIR)n3.c $(SRCDIR)n4.c $(SRCDIR)n5.c $(SRCDIR)n6.c $(SRCDIR)n7.c $(SRCDIR)messageHelper.c 
 
 
 #The list of object files for each program is below.  
@@ -37,6 +37,10 @@ prog : build
 	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(PROGNAME) n1.o $(OBJS) $(LIBS)
 	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N2 n2.o $(OBJS) $(LIBS)
 	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N3 n3.o $(OBJS) $(LIBS)
+	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N4 n4.o $(OBJS) $(LIBS)
+	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N5 n5.o $(OBJS) $(LIBS)
+	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N6 n6.o $(OBJS) $(LIBS)
+	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(BINDIR)N7 n7.o $(OBJS) $(LIBS)
 
 build: $(SOURCE)
 	$(CC) $(CFLAGS) -c $(SOURCE) $(INCLUDES)
@@ -45,6 +49,10 @@ clean:
 	@ rm *.o
 
 run: prog 
+	$(BINDIR)N7 &
+	$(BINDIR)N6 &
+	$(BINDIR)N5 &
+	$(BINDIR)N4 &
 	$(BINDIR)N3 &
 	$(BINDIR)N2 &
 	$(PROGNAME)

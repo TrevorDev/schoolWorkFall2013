@@ -8,10 +8,9 @@
 
 int main()
 {
-	char * name = "n2";
-	char * parent = "link1";
-	char * children[1];
-	children[0]="link3";
-	makeNode(name, parent, children, 1);
+	char * name = "n7";
+	char * parent = "link6";
+	char ** children = NULL;
+	makeNode(name, parent, children, 0);
     return 0;
 }

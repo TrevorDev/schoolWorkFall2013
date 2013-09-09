@@ -8,14 +8,12 @@
 
 int main()
 {
-	int running = 1;
-	if(running){
-		char * message = getMessage("link2");
-	    printf("n3, message %s received\n", message);
-	    if(strcmp(message, "q")==0){
-	    	running=0;
-	    }
-	    free(message);
-	}
+	char * name = "n3";
+	char * parent = "link2";
+	char * children[3];
+	children[0]="link4";
+	children[1]="link5";
+	children[2]="link6";
+	makeNode(name, parent, children, 3);
     return 0;
 }
