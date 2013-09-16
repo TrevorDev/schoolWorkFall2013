@@ -22,5 +22,8 @@ def make_map(config):
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
+    map.connect('map1', '/testRest/test/:userid',
+        controller='testRest', action='test3',
+        userid='[nobody]' )
 
     return map
