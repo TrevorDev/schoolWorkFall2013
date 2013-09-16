@@ -60,9 +60,10 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Lab 1!</h1>
-
+	<img style="position:absolute;top:300px;" id="banana" src="/banana.gif">
         <p>This is my networks lab1 bootstrap page.</p>
-        <p><a id="actionButton" class="btn btn-primary btn-lg">Trigger Alert &raquo;</a></p>
+        <p><a id="actionButtonLeft" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
+	<a id="actionButtonRight" class="btn btn-primary btn-lg">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
       </div>
     </div>
 
@@ -99,8 +100,13 @@
     <script src="/bootstrap/dist/js/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
-	$('#actionButton').click(function(){
-		alert('jquery click event triggered');
+	$('#actionButtonRight').click(function(){
+		//alert('jquery click event triggered');
+		$('#banana').animate({ "left": "+=200px" }, "fast" );
+	});
+	$('#actionButtonLeft').click(function(){
+		//alert('jquery click event triggered');
+		$('#banana').animate({ "left": "-=200px" }, "fast" );
 	});
     </script>
   </body>
