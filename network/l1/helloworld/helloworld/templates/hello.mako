@@ -60,7 +60,7 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Lab 1!</h1>
-	<img style="position:absolute;top:300px;" id="banana" src="/banana.gif">
+	<img style="position:absolute;top:300px;left:0px;" id="banana" src="/banana.gif">
         <p>This is my networks lab1 bootstrap page.</p>
         <p><a id="actionButtonLeft" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
 	<a id="actionButtonRight" class="btn btn-primary btn-lg">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
