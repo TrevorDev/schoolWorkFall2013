@@ -22,7 +22,20 @@ def make_map(config):
 
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
-    map.connect('map1', '/testRest/test/:userid',
+
+    map.connect('map1', '/testRest/get',
+        controller='testRest', action='test3',
+        userid='[nobody]' )
+
+    map.connect('map1', '/testRest/put/:userid',
+        controller='testRest', action='test3',
+        userid='[nobody]' )
+
+    map.connect('map1', '/testRest/post/:userid',
+        controller='testRest', action='test3',
+        userid='[nobody]' )
+
+    map.connect('map1', '/testRest/delete/:userid',
         controller='testRest', action='test3',
         userid='[nobody]' )
 
