@@ -19,9 +19,19 @@ def make_map(config):
     map.connect('/error/{action}/{id}', controller='error')
 
     # CUSTOM ROUTES HERE
-
+    map.connect('/{controller}')
+    map.connect('/{controller}/{id}')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
+
+
+    map.connect('map1', '/users',
+        controller='users', action='index',
+        username='none' )
+
+    map.connect('map1', '/users/:username',
+        controller='users', action='index',
+        username='none' )
 
     map.connect('map1', '/testRest/get',
         controller='testRest', action='test3',
