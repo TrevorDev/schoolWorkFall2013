@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>Lab 1</title>
+    <title>Lab</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -59,9 +59,27 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Lab 1!</h1>
+        <h1>Lab 2!</h1>
+        <form role="form">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Add Name</label>
+            <input class="form-control" id="name" placeholder="Name">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+         
+        </tbody>
+      </table>
 	<img style="position:absolute;top:300px;left:0px;" id="banana" src="/banana.gif">
-        <p>This is my networks lab1 bootstrap page.</p>
+        <p>This is my networks lab bootstrap page.</p>
         <p><a id="actionButtonLeft" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
 	<a id="actionButtonRight" class="btn btn-primary btn-lg">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
       </div>
@@ -108,6 +126,21 @@
 		//alert('jquery click event triggered');
 		$('#banana').animate({ "left": "-=200px" }, "fast" );
 	});
+  $.ajax({
+  url: "/users",
+  context: document.body
+  }).done(function(data) {
+    data = $.parseJSON( data );
+    setTable(data);
+    console.log(data[0]);
+  });
+  var setTable = function(data){
+    table="";
+    for(var key in data){
+      table+="<tr><td>"+key+"</td><td>"+data[key]+"</td></tr>"
+    }
+    $("#userTable").html(table);
+  }
     </script>
   </body>
 </html>
