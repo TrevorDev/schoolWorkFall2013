@@ -29,9 +29,9 @@ class UsersController(BaseController):
                 c.users=allUsers
                 return json.dumps(c.users)
             else:
-                return {"success": False}
+                return {"error": True}
         except:
-            return {"success": False}
+            return {"error": True}
     def all(self):    
         global allUsers
         c.users=allUsers
@@ -39,9 +39,9 @@ class UsersController(BaseController):
             if request.method=="GET":
                 return json.dumps(c.users)
             else:
-                return {"success": False}
+                return {"error": True}
         except:
-            return {"success": False}
+            return {"error": True}
     def edit(self,id,name):    
         global allUsers
         try:
@@ -50,6 +50,6 @@ class UsersController(BaseController):
                 c.users=allUsers
                 return json.dumps(c.users[int(id)])
             else:
-                return {"success": False}
+                return {"error": True}
         except:
-            return {"success": False}
+            return {"error": True}
