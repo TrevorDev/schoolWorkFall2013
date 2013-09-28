@@ -154,50 +154,58 @@
   $("#addUser").submit(function(event){
     event.preventDefault();
     var values = getFormVal('#addUser');
-    $.ajax({
-    url: "/users/"+values["name"],
-    method: "PUT",
-    context: document.body
-    }).done(function(data) {
-      data = $.parseJSON( data );
-      refreshTable();
-    });
+    if(values["name"].length>=1){
+      $.ajax({
+      url: "/users/"+values["name"],
+      method: "put",
+      context: document.body
+      }).done(function(data) {
+        data = $.parseJSON( data );
+        refreshTable();
+      });
+    }
   });
 
   $("#getUser").submit(function(event){
     event.preventDefault();
     var values = getFormVal('#getUser');
-    $.ajax({
-    url: "/users/"+values["id"],
-    method: "get",
-    context: document.body
-    }).done(function(data) {
-      setTable($.parseJSON( data ));
-    });
+    if(parseFloat(values["id"]) >= 0){
+      $.ajax({
+      url: "/users/"+values["id"],
+      method: "get",
+      context: document.body
+      }).done(function(data) {
+        setTable($.parseJSON( data ));
+      });
+    }
   });
 
   $("#deleteUser").submit(function(event){
     event.preventDefault();
     var values = getFormVal('#deleteUser');
-    $.ajax({
-    url: "/users/"+values["id"],
-    method: "delete",
-    context: document.body
-    }).done(function(data) {
-      refreshTable();
-    });
+    if(parseFloat(values["id"]) >= 0){
+      $.ajax({
+      url: "/users/"+values["id"],
+      method: "delete",
+      context: document.body
+      }).done(function(data) {
+        refreshTable();
+      });
+    }
   });
   
   $("#editUser").submit(function(event){
-    event.preventDefault();
-    var values = getFormVal('#editUser');
-    $.ajax({
-    url: "/users/"+values["id"]+"/"+values["name"],
-    method: "delete",
-    context: document.body
-    }).done(function(data) {
-      refreshTable();
-    });
+      event.preventDefault();
+      var values = getFormVal('#editUser');
+      if(parseFloat(values["id"]) >= 0&&values["name"].length>=1){
+        $.ajax({
+        url: "/users/"+values["id"]+"/"+values["name"],
+        method: "post",
+        context: document.body
+        }).done(function(data) {
+          refreshTable();
+        });
+      }
   });
 
 

@@ -16,31 +16,40 @@ class UsersController(BaseController):
         global allUsers
         global idCounter
         c.users=allUsers
-        if request.method=="GET":
-            return json.dumps({int(id): c.users[int(id)]});
-        elif request.method=="PUT":
-            allUsers[idCounter] = id
-            idCounter=idCounter+1
-            c.users=allUsers
-            return json.dumps(c.users)
-        elif request.method=="DELETE":
-            del allUsers[int(id)]
-            c.users=allUsers
-            return json.dumps(c.users)
-        else:
-            return "Error"
+        try:
+            if request.method=="GET":
+                return json.dumps({int(id): c.users[int(id)]});
+            elif request.method=="PUT":
+                allUsers[idCounter] = id
+                idCounter=idCounter+1
+                c.users=allUsers
+                return json.dumps(c.users)
+            elif request.method=="DELETE":
+                del allUsers[int(id)]
+                c.users=allUsers
+                return json.dumps(c.users)
+            else:
+                return {"success": False}
+        except:
+            return {"success": False}
     def all(self):    
         global allUsers
         c.users=allUsers
-        if request.method=="GET":
-            return json.dumps(c.users)
-        else:
-            return "Error"
+        try:
+            if request.method=="GET":
+                return json.dumps(c.users)
+            else:
+                return {"success": False}
+        except:
+            return {"success": False}
     def edit(self,id,name):    
         global allUsers
-        allUsers[int(id)]=name
-        c.users=allUsers
-        if request.method=="POST":
-            return json.dumps(c.users[int(id)])
-        else:
-            return "Error"
+        try:
+            if request.method=="POST" and allUsers[int(id)]:
+                allUsers[int(id)]=name
+                c.users=allUsers
+                return json.dumps(c.users[int(id)])
+            else:
+                return {"success": False}
+        except:
+            return {"success": False}
