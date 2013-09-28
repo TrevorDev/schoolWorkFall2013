@@ -57,17 +57,47 @@
     </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+
       <div class="container">
-        <h1>Lab 2!</h1>
-        <form role="form">
+        
+        <div style="height:100px;">
+	<img style="position:absolute;top:60px;left:0px;width:3%;" id="banana" src="/banana.gif">
+</div>
+<h1>Lab 2!</h1>
+        <p>This is my networks lab bootstrap page.</p>
+        <p><a id="actionButtonLeft" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
+	<a id="actionButtonRight" class="btn btn-primary btn-sm">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
+
+        <form role="form" id="addUser">
           <div class="form-group">
             <label for="exampleInputEmail1">Add Name</label>
-            <input class="form-control" id="name" placeholder="Name">
+            <input class="form-control" name="name" placeholder="Name">
             <button type="submit" class="btn btn-default">Submit</button>
           </div>
         </form>
-        <table class="table table-striped">
+        <form role="form" id="deleteUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Delete by id</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <form role="form" id="getUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Get user by id</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <form role="form" id="editUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Edit name</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <input class="form-control" name="name" placeholder="New Name">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <table style="border: solid 2px;" class="table table-striped">
         <thead>
           <tr>
             <th>ID</th>
@@ -78,37 +108,6 @@
          
         </tbody>
       </table>
-	<img style="position:absolute;top:300px;left:0px;" id="banana" src="/banana.gif">
-        <p>This is my networks lab bootstrap page.</p>
-        <p><a id="actionButtonLeft" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
-	<a id="actionButtonRight" class="btn btn-primary btn-lg">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
-      </div>
-    </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <!--<div class="row">
-
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-
-        </div>
-      </div>-->
-
-      <hr>
     </div> <!-- /container -->
 
 
@@ -126,14 +125,16 @@
 		//alert('jquery click event triggered');
 		$('#banana').animate({ "left": "-=200px" }, "fast" );
 	});
-  $.ajax({
-  url: "/users",
-  context: document.body
-  }).done(function(data) {
-    data = $.parseJSON( data );
-    setTable(data);
-    console.log(data[0]);
-  });
+
+  var refreshTable = function(){
+    $.ajax({
+    url: "/users",
+    context: document.body
+    }).done(function(data) {
+      data = $.parseJSON( data );
+      setTable(data);
+    });
+  }
   var setTable = function(data){
     table="";
     for(var key in data){
@@ -141,6 +142,67 @@
     }
     $("#userTable").html(table);
   }
+
+  var getFormVal = function(selector){
+    var values = {};
+    $.each($(selector).serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+    return values;
+  }
+
+  $("#addUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#addUser');
+    $.ajax({
+    url: "/users/"+values["name"],
+    method: "PUT",
+    context: document.body
+    }).done(function(data) {
+      data = $.parseJSON( data );
+      refreshTable();
+    });
+  });
+
+  $("#getUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#getUser');
+    $.ajax({
+    url: "/users/"+values["id"],
+    method: "get",
+    context: document.body
+    }).done(function(data) {
+      setTable($.parseJSON( data ));
+    });
+  });
+
+  $("#deleteUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#deleteUser');
+    $.ajax({
+    url: "/users/"+values["id"],
+    method: "delete",
+    context: document.body
+    }).done(function(data) {
+      refreshTable();
+    });
+  });
+  
+  $("#editUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#editUser');
+    $.ajax({
+    url: "/users/"+values["id"]+"/"+values["name"],
+    method: "delete",
+    context: document.body
+    }).done(function(data) {
+      refreshTable();
+    });
+  });
+
+
+  refreshTable();
+  
     </script>
   </body>
 </html>

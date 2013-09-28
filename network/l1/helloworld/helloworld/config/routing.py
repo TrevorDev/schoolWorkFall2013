@@ -22,6 +22,9 @@ def make_map(config):
     map.connect('map1', '/users',
         controller='users', action='all',
         username='none')
+    map.connect('map1', '/users/:id/:name',
+        controller='users', action='edit',
+        username='none')
     map.connect('map1', '/users/:id',
         controller='users', action='index',
         username='none')
