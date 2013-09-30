@@ -25,9 +25,8 @@ void getRow(char ** row,char*line){
 	}
 }
 
-char *** readFileToMem(FILE *file){
+char ** readFileToMem(FILE *file){
 	char line[256];
-	char* row[22];
 	int i = 0;
 	int j = 0;
 
@@ -40,58 +39,24 @@ char *** readFileToMem(FILE *file){
 	long size = (long)ftell(file)-offset;
 	fseek(file, 0L, SEEK_SET);
 	long lineCount = size/lineSize;
-	char *** rowArray = calloc(lineCount, sizeof(char **));
-	
+	char ** rowArray = calloc(lineCount, sizeof(char *));
+	printf("%ld\n", lineCount);
 	fseek(file, offset, SEEK_SET);
 	while (getLine(line, sizeof(line), file) != NULL) {
-		getRow(row, line);
-		rowArray[i] = calloc(22, sizeof(char*));
-		for(j=0;j<22;j++){
-			rowArray[i][j]=calloc(16, sizeof(char));
-			strcpy(rowArray[i][j],row[j]);
-		}
-		//printf("%d---\n",i);
+		rowArray[i] = strdup(line);
 		i++;
 	}
 	return rowArray;
 }
 
-int freeMemFile(char *** rows){
+int freeMemFile(char ** rows){
 	int i;
 	int j;
-	for(i=0;i<20;i++){
-		for(j=0;j<22;j++){
-			free(rows[i][j]);
-		}
+	for(i=0;i<3933312;i++){
 		free(rows[i]);
 	}
 	free(rows);
 }
-
-int readFile(FILE *file, long startLine, long endLine, long lineSize, long offset){
-	size_t len;
-	char line[256];
-	char* row[22];
-	int lineCount = 0;
-	int collisionCount = 0;
-	int i;
-	//Move to startLine position
-	fseek(file, offset+(lineSize*startLine), SEEK_SET);
-	while ( getLine(line, sizeof(line), file) != NULL && (endLine<0||ftell(file)<=offset+(lineSize*endLine))) {
-		getRow(row, line);
-		lineCount++;
-		int pID = strtol(row[P_ID], (char **)NULL, 10);
-		int vID = strtol(row[V_ID], (char **)NULL, 10);
-			if(vID==1&&pID==1){
-				collisionCount++;
-			}
-	}
-	printf("Records:%d\n", lineCount);
-	printf("Collisions:%d\n", collisionCount);
-	
-	return 0;
-}
-
 int splitEven(int*array,int size,int num){
 	int val = num/size;
 	int remain = num%size;
@@ -136,7 +101,7 @@ int main()
 	}*/
 
 	//readFile(file, 0, -1, lineSize, start);
-	char *** data = readFileToMem(file);
+	char ** data = readFileToMem(file);
 	freeMemFile(data);
 	//printf("%s\n", data[0][C_YEAR]);
 	fclose ( file );
@@ -145,6 +110,31 @@ int main()
 
 
 
+
+
+/*int readFile(FILE *file, long startLine, long endLine, long lineSize, long offset){
+	size_t len;
+	char line[256];
+	char* row[22];
+	int lineCount = 0;
+	int collisionCount = 0;
+	int i;
+	//Move to startLine position
+	fseek(file, offset+(lineSize*startLine), SEEK_SET);
+	while ( getLine(line, sizeof(line), file) != NULL && (endLine<0||ftell(file)<=offset+(lineSize*endLine))) {
+		getRow(row, line);
+		lineCount++;
+		int pID = strtol(row[P_ID], (char **)NULL, 10);
+		int vID = strtol(row[V_ID], (char **)NULL, 10);
+			if(vID==1&&pID==1){
+				collisionCount++;
+			}
+	}
+	printf("Records:%d\n", lineCount);
+	printf("Collisions:%d\n", collisionCount);
+	
+	return 0;
+}*/
 
 /*typedef struct collision collision;
 typedef struct vehicle vehicle;
