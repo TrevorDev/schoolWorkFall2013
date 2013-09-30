@@ -15,20 +15,31 @@ char * getLine(char line[], long unsigned int size, FILE * file){
 	return ret;
 }
 
-void getRow(char ** row,char*line){
+char * getRow(char ** row,char*rowLine){
 	int i;
+	char * line = strdup(rowLine);
 	char * token = strtok(line, ",");
 
 	for(i=0;i<22;i++){
 		row[i]=token;
 		token = strtok(NULL, ",");
 	}
+	return line;
 }
 
-char ** readFileToMem(FILE *file){
+typedef struct rowList rowList;
+struct rowList {
+	int totalRows;
+	int startRow;
+	int endRow;
+	char ** rows;
+};
+
+rowList * createRowList(FILE *file){
 	char line[256];
 	int i = 0;
 	int j = 0;
+	rowList * data = calloc(1, sizeof(rowList));
 
 	getLine(line, sizeof(line), file);
 	long offset = (long)ftell(file);
@@ -39,24 +50,52 @@ char ** readFileToMem(FILE *file){
 	long size = (long)ftell(file)-offset;
 	fseek(file, 0L, SEEK_SET);
 	long lineCount = size/lineSize;
+
 	char ** rowArray = calloc(lineCount, sizeof(char *));
-	printf("%ld\n", lineCount);
+	
+	
 	fseek(file, offset, SEEK_SET);
 	while (getLine(line, sizeof(line), file) != NULL) {
 		rowArray[i] = strdup(line);
 		i++;
 	}
-	return rowArray;
+	data->rows=rowArray;
+	data->totalRows=i;
+	data->startRow=0;
+	data->endRow=i;
+	//printf("%ld\n", i);
+	return data;
 }
 
-int freeMemFile(char ** rows){
+int destroyRowList(rowList * data){
 	int i;
 	int j;
-	for(i=0;i<3933312;i++){
-		free(rows[i]);
+	for(i=0;i<data->totalRows;i++){
+		free(data->rows[i]);
 	}
-	free(rows);
+	free(data->rows);
+	free(data);
 }
+
+int countCollisions(rowList * data){
+	int i;
+	int collisionCount=0;
+	char* row[22];
+	//printf("%d %d\n",data->startRow,data->endRow);
+	for(i=data->startRow;i<data->endRow;i++){
+		//printf("%s--\n",data->rows[i]);
+		char * tempLine = getRow(row, data->rows[i]);
+
+		int pID = strtol(row[P_ID], (char **)NULL, 10);
+		int vID = strtol(row[V_ID], (char **)NULL, 10);
+		if(vID==1&&pID==1){
+			collisionCount++;
+		}
+		free(tempLine);
+	}
+	return collisionCount;
+}
+
 int splitEven(int*array,int size,int num){
 	int val = num/size;
 	int remain = num%size;
@@ -79,31 +118,28 @@ int main()
 		printf("invalid db file\n");
 		return -1;
 	}
-
-	/*char line[256];
-	getLine(line, sizeof(line), file);
-	long start = (long)ftell(file);
-	getLine(line, sizeof(line), file);
-	long lineSize = (long)ftell(file)-start;
-
-	fseek(file, 0L, SEEK_END);
-	long size = (long)ftell(file)-start;
-	fseek(file, 0L, SEEK_SET);
-	long lineCount = size/lineSize;*/
-
 	
-	/*int len = 5;
-	int ar[len];
-	splitEven(ar,len,11);
-	int i;
-	for(i=0;i<len;i++){
-		printf("%d\n", ar[i]);
-	}*/
+	rowList * data = createRowList(file);
 
-	//readFile(file, 0, -1, lineSize, start);
-	char ** data = readFileToMem(file);
-	freeMemFile(data);
-	//printf("%s\n", data[0][C_YEAR]);
+	int len = 5;
+	int ar[len];
+	splitEven(ar,len,data->totalRows);
+	int i;
+	int last = 0;
+	int totaler = 0;
+	for(i=0;i<len;i++){
+		data->startRow=last;
+		data->endRow=last+ar[i];
+		last = data->endRow;
+		totaler+=countCollisions(data);
+	}
+
+	printf("%d\n", totaler);
+	data->startRow=0;
+	data->endRow=data->totalRows;
+	printf("%d\n", countCollisions(data));
+
+	destroyRowList(data);
 	fclose ( file );
 	return 0;
 }
