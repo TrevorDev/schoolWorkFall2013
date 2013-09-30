@@ -30,18 +30,21 @@ int readFile(FILE *file, long startLine, long endLine, long lineSize, long offse
 	char line[256];
 	char* row[22];
 	int lineCount = 0;
+	int collisionCount = 0;
 	int i;
-	
+	//Move to startLine position
 	fseek(file, offset+(lineSize*startLine), SEEK_SET);
-
 	while ( getLine(line, sizeof(line), file) != NULL && (endLine<0||ftell(file)<=offset+(lineSize*endLine))) {
-		//printf("%s\n", line);
 		getRow(row, line);
-		//printf("%s\n", row[P_SEX]);
 		lineCount++;
-		//printf("%d--\n", lineCount);
+		int pID = strtol(row[P_ID], (char **)NULL, 10);
+		int vID = strtol(row[V_ID], (char **)NULL, 10);
+			if(vID==1&&pID==1){
+				collisionCount++;
+			}
 	}
-	printf("%d--\n", lineCount);
+	printf("Records:%d\n", lineCount);
+	printf("Collisions:%d\n", collisionCount);
 	
 	return 0;
 }
@@ -81,15 +84,15 @@ int main()
 	long lineCount = size/lineSize;
 
 	
-	int len = 5;
+	/*int len = 5;
 	int ar[len];
 	splitEven(ar,len,11);
 	int i;
 	for(i=0;i<len;i++){
 		printf("%d\n", ar[i]);
-	}
+	}*/
 
-	readFile(file, 0, 1, lineSize, start);
+	readFile(file, 0, -1, lineSize, start);
 	fclose ( file );
 	return 0;
 }
