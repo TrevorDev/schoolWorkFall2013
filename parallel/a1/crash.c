@@ -25,6 +25,49 @@ void getRow(char ** row,char*line){
 	}
 }
 
+char *** readFileToMem(FILE *file){
+	char line[256];
+	char* row[22];
+	int i = 0;
+	int j = 0;
+
+	getLine(line, sizeof(line), file);
+	long offset = (long)ftell(file);
+	getLine(line, sizeof(line), file);
+	long lineSize = (long)ftell(file)-offset;
+
+	fseek(file, 0L, SEEK_END);
+	long size = (long)ftell(file)-offset;
+	fseek(file, 0L, SEEK_SET);
+	long lineCount = size/lineSize;
+	char *** rowArray = calloc(lineCount, sizeof(char **));
+	
+	fseek(file, offset, SEEK_SET);
+	while (getLine(line, sizeof(line), file) != NULL) {
+		getRow(row, line);
+		rowArray[i] = calloc(22, sizeof(char*));
+		for(j=0;j<22;j++){
+			rowArray[i][j]=calloc(16, sizeof(char));
+			strcpy(rowArray[i][j],row[j]);
+		}
+		//printf("%d---\n",i);
+		i++;
+	}
+	return rowArray;
+}
+
+int freeMemFile(char *** rows){
+	int i;
+	int j;
+	for(i=0;i<20;i++){
+		for(j=0;j<22;j++){
+			free(rows[i][j]);
+		}
+		free(rows[i]);
+	}
+	free(rows);
+}
+
 int readFile(FILE *file, long startLine, long endLine, long lineSize, long offset){
 	size_t len;
 	char line[256];
@@ -72,7 +115,7 @@ int main()
 		return -1;
 	}
 
-	char line[256];
+	/*char line[256];
 	getLine(line, sizeof(line), file);
 	long start = (long)ftell(file);
 	getLine(line, sizeof(line), file);
@@ -81,7 +124,7 @@ int main()
 	fseek(file, 0L, SEEK_END);
 	long size = (long)ftell(file)-start;
 	fseek(file, 0L, SEEK_SET);
-	long lineCount = size/lineSize;
+	long lineCount = size/lineSize;*/
 
 	
 	/*int len = 5;
@@ -92,7 +135,10 @@ int main()
 		printf("%d\n", ar[i]);
 	}*/
 
-	readFile(file, 0, -1, lineSize, start);
+	//readFile(file, 0, -1, lineSize, start);
+	char *** data = readFileToMem(file);
+	freeMemFile(data);
+	//printf("%s\n", data[0][C_YEAR]);
 	fclose ( file );
 	return 0;
 }
