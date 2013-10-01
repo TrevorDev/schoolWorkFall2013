@@ -1,0 +1,23 @@
+[PILOT] *** Pilot 2.1rc3 for MPI - University of Guelph
+[PILOT] *** Available MPI processes: 6; tags for channels: 2147483647
+[PILOT] *** Running with error checking at Level 1
+[PILOT] *** Command-line options:
+[PILOT] ***  
+[PILOT] *** Allocated Pilot processes: 6; channels: 10; bundles: 2
+
+
+PI_MAIN Opened dbFile and found 3933312 records
+PI_MAIN sending start info to workers
+Worker #1 signing on to do share of 3933312! at start 786663 and end 1573326
+Worker #2 signing on to do share of 3933312! at start 1573326 and end 2359988
+Worker #3 signing on to do share of 3933312! at start 2359988 and end 3146650
+Worker #4 signing on to do share of 3933312! at start 3146650 and end 3933312
+Worker #0 signing on to do share of 3933312! at start 0 and end 786663
+Worker #1 found 290864 collisions and 786663 records
+Worker #2 found 296104 collisions and 786662 records
+Worker #3 found 300641 collisions and 786662 records
+Worker #0 found 288466 collisions and 786663 records
+Worker #4 found 301159 collisions and 786662 records
+PI_MAIN has received results from PI_Reduce
+Total Collisions = 1477234
+Total Records = 3933312
