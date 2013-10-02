@@ -58,4 +58,10 @@ run: prog
 	$(PROGNAME)
  
 val: prog
-	valgrind --dsymutil=yes --leak-check=full --show-reachable=yes $(PROGNAME) 
+	valgrind $(BINDIR)N7 &
+	valgrind $(BINDIR)N6 &
+	valgrind $(BINDIR)N5 &
+	valgrind $(BINDIR)N4 &
+	valgrind $(BINDIR)N3 &
+	valgrind $(BINDIR)N2 &
+	valgrind $(PROGNAME)

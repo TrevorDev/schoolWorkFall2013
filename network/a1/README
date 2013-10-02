@@ -1,0 +1,11 @@
+*Netowrking Assignment 1*
+
+Author: Trevor Baron
+Student Number: 0710828
+
+How to run
+1. Open terminal and cd into this folder
+2. Run: make run
+3. Enter messages to send to all nodes
+4. Observe each node receives message
+5. Enter q to cleanly exit all nodes
