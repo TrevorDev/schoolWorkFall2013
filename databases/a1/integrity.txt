@@ -7,9 +7,12 @@ C. Inserting a new EMPLYEE tuple with SSN = 943775543
 A. Rejecting the insertion of the new WORKS_ON tuple
 B. Changing the definition of the WORKS_ON table so that PNo to no longer a primary key
 
-3. Violates user defined integrity because now emplyee doesnt work here
+3. Valid - However it may be unwanted to have a EMPLOYEE with no hours of work
 
-4. Valid
+4. Violates semantic integrity because the new MgrStartDate of 01-OCT-88 compared to the EMPLOYEE with SSN = 123456789 birthday of 09/01/80 would mean that he was manager at 8 years old which in most cases is not logical. We may inforce the constraint by:
+A. Rejecting the modification
+B. Changing the MgrStartDate to a correct later date
+C. Changing EMPLOYEE with SSN = 12345678 birthday to a correct earlier date
 
 5. Violates referential integrity because SUPERSSN = 943775543 and there is no tuple in EMPLOYEE relation with SSN = 943775543. We may inforce the constraint by:
 A. Rejecting the modification of the new EMPLYEE tuple
