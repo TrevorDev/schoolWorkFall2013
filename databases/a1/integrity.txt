@@ -1,0 +1,17 @@
+1. Violates referential integrity because MgrSSN = 943775543 and there is no tuple in EMPLOYEE relation with SSN = 943775543. We may inforce the constraint by:
+A. Rejecting the insertion of the new DEPARTMENT tuple
+B. Changing the value of MgrSSN in the new DEPARTMENT to an existing SSN value in the EMPLYEE relation
+C. Inserting a new EMPLYEE tuple with SSN = 943775543
+
+2. Violates entity integrity because the new PNo = null, PNo is a primary key and no primary key value can be null. We may inforce the constraint by:
+A. Rejecting the insertion of the new WORKS_ON tuple
+B. Changing the definition of the WORKS_ON table so that PNo to no longer a primary key
+
+3. Violates user defined integrity because now emplyee doesnt work here
+
+4. Valid
+
+5. Violates referential integrity because SUPERSSN = 943775543 and there is no tuple in EMPLOYEE relation with SSN = 943775543. We may inforce the constraint by:
+A. Rejecting the modification of the new EMPLYEE tuple
+B. Changing the value of SUPERSSN in the new EMPLYEE to an existing SSN value in the EMPLYEE relation
+C. Inserting a new EMPLYEE tuple with SSN = 943775543

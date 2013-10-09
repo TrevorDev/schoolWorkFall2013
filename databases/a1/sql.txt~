@@ -1,0 +1,34 @@
+1.
+Select Pname From Project;
+
+2.
+Select Fname,Minit,Lname From Employee,Works_On where Pno=20 and Essn = SSN;
+
+3.
+Select DISTINCT Fname,Minit,Lname From Employee,Works_On where (Pno=20 or Pno=30) and Essn = SSN;
+
+4.
+Select Fname,Minit,Lname From Employee,Works_On where Pno=10 and Hours>=10 and Essn = SSN;
+
+5.
+Select Fname,Minit,Lname From Employee,Dependent where Essn = SSN group by SSN having count(*) > 1;
+
+6.
+Select Fname,Minit,Lname From Employee,Works_On where Essn = SSN group by SSN having count(*) = 1;
+
+7.
+Select Fname,Minit,Lname From Employee Where SSN in(
+	Select Essn From Works_On Where Pno in(
+		Select Pnumber From Project Where Dnum in(
+			Select Dnumber From Department Where Dname = 'Administration'
+		)
+	)
+);
+
+8.
+Select Distinct * From Project Where Pnumber in(
+	Select Pno From Works_On Where Hours > 10
+);
+
+
+
