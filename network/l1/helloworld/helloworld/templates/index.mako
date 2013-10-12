@@ -14,6 +14,7 @@ ${common.navbar()}
         <p class="lead">Greatest Image API on the web!</p>
         </div>
         <div class="col-md-6">
+          <div id="alert" style="display: none;" class="alert alert-warning"></div>
           <h1>Sign In</h1>
           <div class="input-group input-group-lg" style="padding-bottom:5px">
             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
@@ -58,13 +59,19 @@ ${common.navbar()}
     </div>
     ${common.bottomIncludes()}
     <script>
+    var attempt = 0;
     $("#signIn").click(function(event){
-      if( $("#user").val()=='testUsers' ){
+      if( $("#user").val()=='testUser' && $("#pass").val()=='test'){
         window.location.href = "/dashboard";
-      };
+      }else{
+        attempt++;
+        $("#alert").html('<strong>Warning!</strong> Invalid Login Info. '+attempt+' Attempts');
+        $("#alert").css("display", "block");
+      }
     });
+
     $("#create").click(function(event){
-      if( $("#repeatPass").val()=='testUsers' && $("#signupPass").val()=='testUsers' && $("#signupUser").val()=='testUsers' ){
+      if( $("#repeatPass").val()=='testUser' && $("#signupPass").val()=='testUser' && $("#signupUser").val()=='testUser' ){
         window.location.href = "/dashboard";
       };
     });

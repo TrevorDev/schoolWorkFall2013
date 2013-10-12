@@ -7,11 +7,10 @@ from helloworld.lib.base import BaseController, render
 
 log = logging.getLogger(__name__)
 
-class HelloController(BaseController):
+class DashboardController(BaseController):
 
     def index(self):
         # Return a rendered template
-        #return render('/hello.mako')
+        #return render('/dashboard.mako')
         # or, return a string
-        #return 'Hello World'
-        return render('/hello.mako')
+        return render('/dashboard.mako')
