@@ -1,0 +1,12 @@
+body {
+	padding-bottom: 70px;
+}
+
+.navbar {
+	border-radius: 0px;
+}
+
+.container-wide {
+	padding-left: 20px;
+	padding-right: 20px;
+}

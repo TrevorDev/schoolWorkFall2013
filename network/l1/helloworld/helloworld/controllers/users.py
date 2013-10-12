@@ -12,7 +12,7 @@ allUsers = {0: "Trevor", 1: "Jack"}
 idCounter = 2
 class UsersController(BaseController):
 
-    def index(self, id):
+    def index(self, id=0):
         global allUsers
         global idCounter
         c.users=allUsers

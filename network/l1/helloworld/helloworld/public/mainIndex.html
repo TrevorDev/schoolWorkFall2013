@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+
+    <title>Lab</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+
+          </button>
+          <a class="navbar-brand" href="#">Trevor's Lab</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+
+      <div class="container">
+        
+        <div style="height:100px;">
+	<img style="position:absolute;top:60px;left:0px;width:3%;" id="banana" src="/banana.gif">
+</div>
+<h1>Lab 2!</h1>
+        <p>This is my networks lab bootstrap page.</p>
+        <p><a id="actionButtonLeft" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-hand-left"></span> Move Left</a>
+	<a id="actionButtonRight" class="btn btn-primary btn-sm">Move Right <span class="glyphicon glyphicon-hand-right"></span></a></p>
+
+        <form role="form" id="addUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Add Name</label>
+            <input class="form-control" name="name" placeholder="Name">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <form role="form" id="deleteUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Delete by id</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <form role="form" id="getUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Get user by id</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <form role="form" id="editUser">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Edit name</label>
+            <input class="form-control" name="id" placeholder="ID">
+            <input class="form-control" name="name" placeholder="New Name">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </form>
+        <table style="border: solid 2px;" class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody id="userTable">
+         
+        </tbody>
+      </table>
+      <p>Get /users: returns all users</p>
+      <p>Get /users/id: returns username by that id</p>
+      <p>Put /users/name: adds user with the given name</p>
+      <p>Delete /users/id: removes the user with that id</p>
+      <p>post /users/id/name: renames the user at that id with the given name</p>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/bootstrap/dist/js/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+	$('#actionButtonRight').click(function(){
+		//alert('jquery click event triggered');
+		$('#banana').animate({ "left": "+=200px" }, "fast" );
+	});
+	$('#actionButtonLeft').click(function(){
+		//alert('jquery click event triggered');
+		$('#banana').animate({ "left": "-=200px" }, "fast" );
+	});
+
+  var refreshTable = function(){
+    $.ajax({
+    url: "/users",
+    context: document.body
+    }).done(function(data) {
+      data = $.parseJSON( data );
+      setTable(data);
+    });
+  }
+  var setTable = function(data){ 
+    table="";
+    for(var key in data){
+      table+="<tr><td>"+key+"</td><td>"+data[key]+"</td></tr>"
+    }
+    $("#userTable").html(table);
+  }
+
+  var getFormVal = function(selector){
+    var values = {};
+    $.each($(selector).serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+    return values;
+  }
+
+  $("#addUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#addUser');
+    if(values["name"].length>=1){
+      $.ajax({
+      url: "/users/"+values["name"],
+      method: "put",
+      context: document.body
+      }).done(function(data) {
+        data = $.parseJSON( data );
+        refreshTable();
+      });
+    }
+  });
+
+  $("#getUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#getUser');
+    if(parseFloat(values["id"]) >= 0){
+      $.ajax({
+      url: "/users/"+values["id"],
+      method: "get",
+      context: document.body
+      }).done(function(data) {
+        setTable($.parseJSON( data ));
+      });
+    }
+  });
+
+  $("#deleteUser").submit(function(event){
+    event.preventDefault();
+    var values = getFormVal('#deleteUser');
+    if(parseFloat(values["id"]) >= 0){
+      $.ajax({
+      url: "/users/"+values["id"],
+      method: "delete",
+      context: document.body
+      }).done(function(data) {
+        refreshTable();
+      });
+    }
+  });
+  
+  $("#editUser").submit(function(event){
+      event.preventDefault();
+      var values = getFormVal('#editUser');
+      if(parseFloat(values["id"]) >= 0&&values["name"].length>=1){
+        $.ajax({
+        url: "/users/"+values["id"]+"/"+values["name"],
+        method: "post",
+        context: document.body
+        }).done(function(data) {
+          refreshTable();
+        });
+      }
+  });
+
+
+  refreshTable();
+  
+    </script>
+  </body>
+</html>
