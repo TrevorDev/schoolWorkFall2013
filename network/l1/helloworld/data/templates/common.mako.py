@@ -3,18 +3,18 @@ from mako import runtime, filters, cache
 UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
-_magic_number = 6
-_modified_time = 1381551673.732259
-_template_filename=u'/workspace/schoolWorkFall2013/network/l1/helloworld/helloworld/templates/common.mako'
-_template_uri=u'/common.mako'
-_template_cache=cache.Cache(__name__, _modified_time)
-_source_encoding='utf-8'
+_magic_number = 8
+_modified_time = 1381682885.677811
+_enable_loop = True
+_template_filename = u'/home/trevor/workspace/schoolWorkFall2013/network/l1/helloworld/helloworld/templates/common.mako'
+_template_uri = u'/common.mako'
+_source_encoding = 'utf-8'
 from webhelpers.html import escape
 _exports = ['navbar', 'top', 'bottomIncludes']
 
 
 def render_body(context,**pageargs):
-    context.caller_stack._push_frame()
+    __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         __M_writer = context.writer()
@@ -30,7 +30,7 @@ def render_body(context,**pageargs):
 
 
 def render_navbar(context):
-    context.caller_stack._push_frame()
+    __M_caller = context.caller_stack._push_frame()
     try:
         __M_writer = context.writer()
         # SOURCE LINE 18
@@ -41,7 +41,7 @@ def render_navbar(context):
 
 
 def render_top(context):
-    context.caller_stack._push_frame()
+    __M_caller = context.caller_stack._push_frame()
     try:
         __M_writer = context.writer()
         # SOURCE LINE 1
@@ -52,7 +52,7 @@ def render_top(context):
 
 
 def render_bottomIncludes(context):
-    context.caller_stack._push_frame()
+    __M_caller = context.caller_stack._push_frame()
     try:
         __M_writer = context.writer()
         # SOURCE LINE 55

@@ -3,12 +3,12 @@ from mako import runtime, filters, cache
 UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
-_magic_number = 6
-_modified_time = 1381592639.405494
-_template_filename='/workspace/schoolWorkFall2013/network/l1/helloworld/helloworld/templates/dashboard.mako'
-_template_uri='/dashboard.mako'
-_template_cache=cache.Cache(__name__, _modified_time)
-_source_encoding='utf-8'
+_magic_number = 8
+_modified_time = 1381682916.37776
+_enable_loop = True
+_template_filename = '/home/trevor/workspace/schoolWorkFall2013/network/l1/helloworld/helloworld/templates/dashboard.mako'
+_template_uri = '/dashboard.mako'
+_source_encoding = 'utf-8'
 from webhelpers.html import escape
 _exports = []
 
@@ -21,11 +21,11 @@ def _mako_get_namespace(context, name):
         return context.namespaces[(__name__, name)]
 def _mako_generate_namespaces(context):
     # SOURCE LINE 1
-    ns = runtime.TemplateNamespace(u'common', context._clean_inheritance_tokens(), templateuri=u'common.mako', callables=None, calling_uri=_template_uri)
+    ns = runtime.TemplateNamespace(u'common', context._clean_inheritance_tokens(), templateuri=u'common.mako', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, u'common')] = ns
 
 def render_body(context,**pageargs):
-    context.caller_stack._push_frame()
+    __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         common = _mako_get_namespace(context, 'common')
