@@ -12,13 +12,16 @@ allUsers = {0: "Trevor", 1: "Jack"}
 idCounter = 2
 class UsersController(BaseController):
 
-    def index(self, id=0):
+    def index(self, id=None,name=None):
         global allUsers
         global idCounter
         c.users=allUsers
         try:
             if request.method=="GET":
-                return json.dumps({int(id): c.users[int(id)]});
+                if id is None:
+                    return json.dumps(c.users)
+                else:
+                    return json.dumps({int(id): c.users[int(id)]});
             elif request.method=="PUT":
                 allUsers[idCounter] = id
                 idCounter=idCounter+1
@@ -28,27 +31,10 @@ class UsersController(BaseController):
                 del allUsers[int(id)]
                 c.users=allUsers
                 return json.dumps(c.users)
-            else:
-                return {"error": True}
-        except:
-            return {"error": True}
-    def all(self):    
-        global allUsers
-        c.users=allUsers
-        try:
-            if request.method=="GET":
-                return json.dumps(c.users)
-            else:
-                return {"error": True}
-        except:
-            return {"error": True}
-    def edit(self,id,name):    
-        global allUsers
-        try:
-            if request.method=="POST" and allUsers[int(id)]:
+            elif request.method=="POST" and allUsers[int(id)]:
                 allUsers[int(id)]=name
                 c.users=allUsers
-                return json.dumps(c.users[int(id)])
+                return json.dumps(c.users[int(id)])    
             else:
                 return {"error": True}
         except:

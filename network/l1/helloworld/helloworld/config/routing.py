@@ -29,7 +29,12 @@ def make_map(config):
         controller='users', action='index',
         username='none')
     map.connect('/{controller}')"""
+
+    map.connect('/users/{id}', controller='users', action='index')
+    map.connect('/users/{id}/{name}', controller='users', action='index')
+
     map.connect('/', controller='main', action='index')
+
     map.connect('/{controller}')
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')

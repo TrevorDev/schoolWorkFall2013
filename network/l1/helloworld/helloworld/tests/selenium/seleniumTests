@@ -8,9 +8,9 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="test3">Valid Login</a></td></tr>
 <tr><td><a href="test2">Page loads</a></td></tr>
 <tr><td><a href="test1">Invalid Login</a></td></tr>
-<tr><td><a href="tests">Valid Login</a></td></tr>
 </tbody></table>
 </body>
 </html>
