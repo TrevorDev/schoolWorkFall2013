@@ -25,7 +25,7 @@ void randBoard(Board * b){
 	srand(time(NULL));
 	for(int i = 0;i<b->x;i++){
 		for(int j = 0;j<b->y;j++){
-			int r = rand()% 4;
+			int r = rand()% 3;
 			if(r==0){
 				b->board[i][j]='R';
 			}else if(r==1){
@@ -33,6 +33,7 @@ void randBoard(Board * b){
 			}else if(r==2){
 				b->board[i][j]=' ';
 			}
+			//b->board[i][j]=i+48;
 		}
 	}
 }
@@ -47,24 +48,10 @@ void cpyBoard(Board * into, Board * from){
 
 char getBoardVal(Board * b, int x, int y){
 	if(x<0||x>=b->x||y<0||y>=b->y){
-		return 'X';
+		return '*';
 	}else{
 		return b->board[x][y];
 	}
-}
-
-int stepRB(Board * b){
-	Board * c = createBoard(b->x,b->y);
-	cpyBoard(c,b);
-	for(int i = 0;i<b->x;i++){
-		for(int j = 0;j<b->y;j++){
-			if(getBoardVal(b,i,j)=='R'&&getBoardVal(b,i+1,j)==' '){
-				b->board[i][j]=' ';
-				b->board[i+1][j]='R';
-			}
-		}
-	}
-	return 0;
 }
 
 void destroyBoard(Board * b){
@@ -75,10 +62,40 @@ void destroyBoard(Board * b){
 	free(b);
 }
 
+int stepRB(Board * b){
+	int hitCount = 0;
+	Board * c = createBoard(b->x,b->y);
+	cpyBoard(c,b);
+	for(int i = 0;i<c->x;i++){
+		for(int j = 0;j<c->y;j++){
+			if(getBoardVal(c,i,j)=='R'&&getBoardVal(c,i+1,j)==' '){
+				hitCount++;
+				b->board[i][j]=' ';
+				b->board[i+1][j]='R';
+			}
+		}
+	}
+	cpyBoard(c,b);
+	for(int i = 0;i<c->x;i++){
+		for(int j = 0;j<c->y;j++){
+			if(getBoardVal(c,i,j)=='B'&&getBoardVal(c,i,j+1)==' '){
+				hitCount++;
+				b->board[i][j]=' ';
+				b->board[i][j+1]='B';
+			}
+		}
+	}
+	destroyBoard(c);
+	return hitCount;
+}
+
+
+
 void printBoard(Board * b){
 	for(int i = 0;i<b->x;i++){
-		for(int j = 0;j<b->y;j++){
-			printf("%c",b->board[i][j]);
+	for(int j = 0;j<b->y;j++){
+		
+			printf("%c",b->board[j][i]);
 		}
 		printf("\n");
 	}
@@ -87,12 +104,13 @@ void printBoard(Board * b){
 
 int main()
 {
-	Board * b = createBoard(5,5);
+	Board * b = createBoard(30,30);
 	randBoard(b);
-
 	printBoard(b);
-	int check = stepRB(b);
-	printBoard(b);
+	while(stepRB(b)!=0){
+		printBoard(b);
+	}
+	
 
 	destroyBoard(b);
 	return 0;

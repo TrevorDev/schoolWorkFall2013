@@ -33,15 +33,16 @@ int main()
 			charPacket[0]='T';
 			for(int i=0;i<strlen(toNode);i++){
 				charPacket[i+1]=toNode[i];
-				charPacket[i+2]='\0';
+				charPacket[i+2]='\n';
+				charPacket[i+3]='\0';
 			}
-			printf("TO: %s\n",charPacket);
+			//printf("TO: %s\n",charPacket);
 		}
-		printf("%s-%s\n",file,toNode);
+		//printf("%s-%s\n",file,toNode);
 		FILE * fd = fopen(file, "r");
 		if(fd!=NULL){
 			 while(fgets(toSend, 25, fd)!=NULL ) {
-				printf("%s",toSend);
+				//printf("%s",toSend);
 				for(int i=0;i<size;i++){
 					for(int j=0;j<size;j++){
 						charPacket[0]=toSend[j];

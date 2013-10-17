@@ -28,7 +28,7 @@ void deletePipes(char * children[], int size){
 void sendMessage(char * message, char * link){
 	int fd;
     fd = open(link, O_WRONLY);
-    write(fd, message, strlen(message));
+    write(fd, message, sizeof(char)*strlen(message));
     close(fd);
 }
 
@@ -38,7 +38,9 @@ char * getMessage(char * link){
     while(fd==-1){
         fd = open(link, O_RDONLY);
     }
-    read(fd, message, sizeof(char)*MAX_BUF);
+    printf("hit1\n");
+    fgets(message, MAX_BUF, fd);
+    printf("hit\n");
     close(fd);
     return message;
 }
@@ -49,18 +51,13 @@ void makeNode(char * name, char * parent, char * children[], int size){
     makePipes(children, size);
     while(running){
         char * message = getMessage(parent);
-        printf("%s, message %s received\n", name, message);
-        if(children!=NULL){
-            for(int i=0;i<size;i++){
-                sendMessage(message, children[i]);
-            }
-            for(int i=0;i<size;i++){
-                char * recMessage = getMessage(children[i]);
-                //printf("%s, received %s from %s\n",name,recMessage,children[i]);
-                free(recMessage);
-            }
+        printf("%c%c-%c%c-%c\n",message[1],message[2],name[0],name[1],message[0]);
+        if(message[1]==name[0]&&message[2]==name[1]){
+            //printf("%c\n",message[0]);
         }
-        sendMessage(message, parent);
+        
+        
+        //sendMessage(message, parent);
         if(strcmp(message, "q")==0){
             running=0;
         }
