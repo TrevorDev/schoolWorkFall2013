@@ -52,28 +52,56 @@ ${common.navbar()}
         </div>
 </div>
 </div> <!-- /container -->
-    <div class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="navbar navbar-inverse navbar-fixed-bottom" style="z-index:-1;">
       <div class="navbar-header">
-          <a class="navbar-brand" href="#">Enter Username:testUser Password:test to login</a>
+          <p class="navbar-brand">
+            Enter Username:testUser Password:test to login<br>
+            Perform DB queries with<br>
+            Get(ALL): /users<br>
+            Get: /users/id<br>
+            Put: /users params(username='user',password='pass')<br>
+            Post: /users params(username='user',password='pass')<br>
+            Delete: /users/id<br>
+            Auth(Post): /users/auth params(username='user',password='pass')
+          </p>
+          
       </div>
     </div>
     ${common.bottomIncludes()}
     <script>
     var attempt = 0;
     $("#signIn").click(function(event){
-      if( $("#user").val()=='testUser' && $("#pass").val()=='test'){
-        window.location.href = "/dashboard";
-      }else{
-        attempt++;
-        $("#alert").html('<strong>Warning!</strong> Invalid Login Info. '+attempt+' Attempts');
-        $("#alert").css("display", "block");
-      }
+      $.ajax({
+        url: "/users/auth",
+        method: "post",
+        data: { username: $("#user").val(), password: $("#pass").val() },
+        context: document.body
+      }).done(function(data) {
+          if(data=='success'){
+            window.location.href = "/dashboard";
+          }else{
+            attempt++;
+            $("#alert").html('<strong>Warning!</strong> Invalid Login Info. '+attempt+' Attempts');
+            $("#alert").css("display", "block");
+          }
+      });
+        
     });
 
     $("#create").click(function(event){
-      if( $("#repeatPass").val()=='testUser' && $("#signupPass").val()=='testUser' && $("#signupUser").val()=='testUser' ){
-        window.location.href = "/dashboard";
-      };
+        if($("#repeatPass").val()!=$("#signupPass").val()){
+          $("#alert").html('<strong>Warning!</strong> Passwords do not match');
+          $("#alert").css("display", "block");
+        }else{
+          $.ajax({
+            url: "/users",
+            method: "put",
+            data: { username: $("#signupUser").val(), password: $("#repeatPass").val() },
+            context: document.body
+          }).done(function(data) {
+              data = $.parseJSON( data );
+          });
+        }
     });
     $("#signUp").click(function(event){
         //window.location.href = "/signup";

@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 8
-_modified_time = 1381682916.37776
+_modified_time = 1382128982.524401
 _enable_loop = True
 _template_filename = '/home/trevor/workspace/schoolWorkFall2013/network/l1/helloworld/helloworld/templates/dashboard.mako'
 _template_uri = '/dashboard.mako'
@@ -36,7 +36,7 @@ def render_body(context,**pageargs):
         __M_writer(u'\n')
         # SOURCE LINE 6
         __M_writer(escape(common.navbar()))
-        __M_writer(u'\n  </head>\n\n  <body>\n<div class="container-wide">\n<div">\n        <div id="toggle" class="col-md-3">\n        <h1>Dashboard!</h1>\n        <p class="lead">Greatest Image API on the web!</p>\n        </div>\n</div>\n</div> <!-- /container -->\n    <div class="navbar navbar-inverse navbar-fixed-bottom">\n      <div class="navbar-header">\n          <a class="navbar-brand" href="#">Enter Username:testUser Password:test to login</a>\n      </div>\n    </div>\n\n    <!-- Bootstrap core JavaScript\n    ================================================== -->\n    <!-- Placed at the end of the document so the pages load faster -->\n    <script src="/bootstrap/dist/js/jquery.min.js"></script>\n    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>\n    <script>\n    </script>\n\n  </body>\n</html>\n')
+        __M_writer(u'\n  </head>\n\n  <body>\n<div class="container-wide">\n<div">\n        <div id="toggle" class="col-md-3">\n        <h1>Dashboard!</h1>\n        <p class="lead">Greatest Image API on the web!</p>\n        </div>\n</div>\n</div> <!-- /container -->\n    <div class="navbar navbar-inverse navbar-fixed-bottom">\n      <div class="navbar-header">\n      </div>\n    </div>\n\n    <!-- Bootstrap core JavaScript\n    ================================================== -->\n    <!-- Placed at the end of the document so the pages load faster -->\n    <script src="/bootstrap/dist/js/jquery.min.js"></script>\n    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>\n    <script>\n    </script>\n\n  </body>\n</html>\n')
         return ''
     finally:
         context.caller_stack._pop_frame()

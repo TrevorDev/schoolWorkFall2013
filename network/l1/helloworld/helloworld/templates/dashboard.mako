@@ -17,7 +17,6 @@ ${common.navbar()}
 </div> <!-- /container -->
     <div class="navbar navbar-inverse navbar-fixed-bottom">
       <div class="navbar-header">
-          <a class="navbar-brand" href="#">Enter Username:testUser Password:test to login</a>
       </div>
     </div>
 

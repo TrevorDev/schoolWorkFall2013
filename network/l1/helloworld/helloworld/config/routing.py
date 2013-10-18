@@ -30,6 +30,7 @@ def make_map(config):
         username='none')
     map.connect('/{controller}')"""
 
+    map.connect('/users/auth', controller='users', action='auth')
     map.connect('/users/{id}', controller='users', action='index')
     map.connect('/users/{id}/{name}', controller='users', action='index')
 
