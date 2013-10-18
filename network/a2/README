@@ -1,4 +1,4 @@
-*Netowrking Assignment 1*
+*Netowrking Assignment 2*
 
 Author: Trevor Baron
 Student Number: 0710828
@@ -6,6 +6,6 @@ Student Number: 0710828
 How to run
 1. Open terminal and cd into this folder
 2. Run: make run
-3. Enter messages to send to all nodes
-4. Observe each node receives message
-5. Enter q to cleanly exit all nodes
+3. Enter text file to send followed by the node to send the message to eg. test.txt n4
+4. Observe the selected node receives the message
+5. Enter when asked to continue enter N to exit cleanly
