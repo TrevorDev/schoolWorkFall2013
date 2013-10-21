@@ -6,8 +6,8 @@ LDFLAGS     =
 
 #Directories where the compiler can find things
 INCLUDES    =
-LIBDIRS     = 
-LIBS        = 
+LIBDIRS     =  
+LIBS        = -lm
 
 BINDIR = ./
 SRCDIR = ./
@@ -23,7 +23,7 @@ SOURCE = $(SRCDIR)rbs.c
 # except with .o instead of .c.   Make changes as appropriate
 
 
-OBJS    = 
+OBJS    = rbs.o
 
 
 PROGNAME = $(BINDIR)rbs
@@ -34,7 +34,7 @@ all : prog
 
 
 prog : build
-	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(PROGNAME) rbs.o $(OBJS) $(LIBS)
+	$(CC) $(LIBDIRS) $(LDFLAGS) -o $(PROGNAME)  $(OBJS) $(LIBS)
 build: $(SOURCE)
 	$(CC) $(CFLAGS) -c $(SOURCE) $(INCLUDES)
 

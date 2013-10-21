@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h> 
 
 typedef struct Tile {
    int size;	
@@ -14,6 +15,8 @@ typedef struct Board {
    int size;
 } Board;
 
+
+
 Board * createBoard(int size){
 	Board *b = (Board *) calloc(sizeof(Board), 1);
 	b->size=size;
@@ -24,17 +27,21 @@ Board * createBoard(int size){
 	return b;
 }
 
-void randBoard(Board * b){
-	srand(time(NULL));
+void randBoard(Board * b, int * seed){
+	if(seed==NULL){
+		srand(time(NULL));
+	}else{
+		srand(*seed);
+	}
 	for(int i = 0;i<b->size;i++){
 		for(int j = 0;j<b->size;j++){
 			int r = rand()% 3;
 			if(r==0){
-				b->board[i][j]='R';
-			}else if(r==1){
-				b->board[i][j]='B';
-			}else if(r==2){
 				b->board[i][j]=' ';
+			}else if(r==1){
+				b->board[i][j]='R';
+			}else if(r==2){
+				b->board[i][j]='B';
 			}
 			//b->board[i][j]=i+48;
 		}
@@ -108,21 +115,32 @@ void printBoard(Board * b){
 int main()
 {
 	//setting values
-	int numProcessors=3,boardSize=50,tileSize=10,maxDensity=50,maxSteps=10,seed=10,interactive=0;
+	int numProcessors=3,boardSize=50,tileSize=10,maxDensity=50,maxSteps=10,seed=0,interactive=0;
 	//error checking
 	if(boardSize%tileSize!=0){
 		printf("Invalid args, b mod t must equal 0\n");
+		return 0;
+	} else if(numProcessors<1){
+		printf("Invalid args, p must be > 0\n");
+		return 0;
+	} else if(boardSize<2){
+		printf("Invalid args, b must be > 1\n");
 		return 0;
 	}
 
 	//Setting up board
 	Board * b = createBoard(boardSize);
-	randBoard(b);
+	randBoard(b, &seed);
 
-	int numTiles=(boardSize*boardSize)/(tileSize*tileSize);
-	Tile* tiles[numTiles];
-	for(int i=0;i<numTiles;i++){
-		tiles[i] = (Tile*) calloc(sizeof(Tile), 1);
+	int tileGridSize=sqrt((boardSize*boardSize)/(tileSize*tileSize));
+
+	Tile* (tiles[tileGridSize][tileGridSize]);
+	for(int i=0;i<tileGridSize;i++){
+		for(int j=0;j<tileGridSize;j++){
+			tiles[i][j] = (Tile*) calloc(sizeof(Tile), 1);
+			tiles[i][j]->x=i*tileSize;
+			tiles[i][j]->y=j*tileSize;
+		}
 	}
 
 	//work loop
@@ -131,7 +149,12 @@ int main()
 		fgetc(stdin);
 	}while(stepRB(b)!=0);
 	
-
+	//cleanup
+	for(int i=0;i<tileGridSize;i++){
+		for(int j=0;j<tileGridSize;j++){
+			free(tiles[i][j]);
+		}
+	}
 	destroyBoard(b);
 	return 0;
 }
