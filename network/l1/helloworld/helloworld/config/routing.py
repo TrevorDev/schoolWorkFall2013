@@ -31,6 +31,7 @@ def make_map(config):
     map.connect('/{controller}')"""
 
     map.connect('/users/auth', controller='users', action='auth')
+    map.connect('/users/logout', controller='users', action='logout')
     map.connect('/users/{id}', controller='users', action='index')
     map.connect('/users/{id}/{name}', controller='users', action='index')
 

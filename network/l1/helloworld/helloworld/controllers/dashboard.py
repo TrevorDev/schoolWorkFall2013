@@ -13,4 +13,8 @@ class DashboardController(BaseController):
         # Return a rendered template
         #return render('/dashboard.mako')
         # or, return a string
-        return render('/dashboard.mako')
+        if request.cookies.get( 'username' ):
+        	c.test='cool';
+        	return render('/dashboard.mako')
+        else:
+        	return redirect(url('/')) 

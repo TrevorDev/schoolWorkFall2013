@@ -13,4 +13,7 @@ class MainController(BaseController):
         # Return a rendered template
         #return render('/main.mako')
         # or, return a string
-        return render('/index.mako')
+        if request.cookies.get( 'username' ):
+        	return redirect(url('/dashboard'))
+        else:
+        	return render('/index.mako')

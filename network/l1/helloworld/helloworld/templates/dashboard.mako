@@ -10,7 +10,7 @@ ${common.navbar()}
 <div class="container-wide">
 <div">
         <div id="toggle" class="col-md-3">
-        <h1>Dashboard!</h1>
+        <h1>Dashboard! Welcome ${request.cookies.get( 'username' )}</h1>
         <p class="lead">Greatest Image API on the web!</p>
         </div>
 </div>

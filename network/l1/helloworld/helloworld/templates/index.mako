@@ -55,14 +55,12 @@ ${common.navbar()}
     <div class="navbar navbar-inverse navbar-fixed-bottom" style="z-index:-1;">
       <div class="navbar-header">
           <p class="navbar-brand">
-            Enter Username:testUser Password:test to login<br>
-            Perform DB queries with<br>
-            Get(ALL): /users<br>
-            Get: /users/id<br>
-            Put: /users params(username='user',password='pass')<br>
-            Post: /users params(username='user',password='pass')<br>
-            Delete: /users/id<br>
-            Auth(Post): /users/auth params(username='user',password='pass')
+            Login with usernmae:testUser password:test<br>
+            observe that dashboard page loads and displays username<br>
+            attempt to go to 127.0.0.1:5000 again and see that you get redirected to dash<br>
+            click logout<br>
+            attempt to got to 127.0.0.1:5000/dashboard<br>
+            observe that you get redirected to login/create account page
           </p>
           
       </div>
@@ -99,7 +97,8 @@ ${common.navbar()}
             data: { username: $("#signupUser").val(), password: $("#repeatPass").val() },
             context: document.body
           }).done(function(data) {
-              data = $.parseJSON( data );
+            $("#alert").html('<strong>Account Created!</strong>');
+            $("#alert").css("display", "block");
           });
         }
     });
