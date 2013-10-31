@@ -1,0 +1,43 @@
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+
+/**
+ * Main class to load the board
+ * @author trevor
+ * 
+ */
+public class Window extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public ArrayList<Sprite> drawList = new ArrayList<Sprite>();
+	public Window(String title, int x, int y,Map m) {
+		this.addKeyListener(new Input());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(x, y);
+        setLocationRelativeTo(null);
+        setTitle(title);
+        setResizable(false);
+        setVisible(true);
+    }
+	
+	/**
+	 * Draws the sprites
+	 */
+	public void paint(Graphics g) {
+		super.paint(g);
+		
+		for(Sprite x : drawList){
+			
+		}
+		g.drawImage(player.pic, player.posX, player.posY, this);
+
+		Toolkit.getDefaultToolkit().sync();
+		g.dispose();
+	}
+}

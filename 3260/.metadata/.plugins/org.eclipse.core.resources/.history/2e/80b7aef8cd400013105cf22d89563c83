@@ -1,0 +1,11 @@
+/**
+ * Main class to load the board
+ * @author trevor
+ * 
+ */
+public class Frogger {
+
+    public static void main(String[] args) {
+        new Window("Frogger", 500,500);
+    }
+}

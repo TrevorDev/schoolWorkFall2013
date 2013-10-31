@@ -1,0 +1,7 @@
+
+public class Map {
+	public char[][] grid;
+	public Map(int x, int y){
+		grid = new char[y][x];
+	}
+}
