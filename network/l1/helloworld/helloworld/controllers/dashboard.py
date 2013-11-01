@@ -18,3 +18,5 @@ class DashboardController(BaseController):
         	return render('/dashboard.mako')
         else:
         	return redirect(url('/')) 
+
+
