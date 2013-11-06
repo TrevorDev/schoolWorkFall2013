@@ -86,8 +86,6 @@ public class Map implements Drawable, ActionListener{
 	public void draw(Graphics g,int x, int y,int width, int height) {
 		if(Player.player.posY==0){
 			score++;
-			timeLeft+=5;
-			Player.player.move(0, 10);
 		}
 		g.setColor(new Color(0.2f, 0.4f, 0.2f));
 		g.fillRect(0, 0, 500, 500);
@@ -114,7 +112,7 @@ public class Map implements Drawable, ActionListener{
 		g.drawImage(d.pic, d.posX,d.posY, null);*/
 		g.setFont(new Font("Ariel",20, 20));
 		g.drawString("Count Down: "+timeLeft, 0, 490);
-		g.drawString("Score: "+score, 400, 490);
+		g.drawString("Score: "+score, 500, 490);
 		//System.out.println("hit");
 	}
 

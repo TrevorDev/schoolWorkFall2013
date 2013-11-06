@@ -27,7 +27,6 @@ public class Map implements Drawable, ActionListener{
 	public Timer timer;
 	public boolean gameOver = false;
 	private final int DELAY = 500;
-	int score = 0;
 	public Map(int x, int y,JFrame parentFrame){
 		
 		this.parentFrame = parentFrame;
@@ -84,11 +83,6 @@ public class Map implements Drawable, ActionListener{
 	
 	@Override
 	public void draw(Graphics g,int x, int y,int width, int height) {
-		if(Player.player.posY==0){
-			score++;
-			timeLeft+=5;
-			Player.player.move(0, 10);
-		}
 		g.setColor(new Color(0.2f, 0.4f, 0.2f));
 		g.fillRect(0, 0, 500, 500);
 		g.setColor(new Color(0.2f, 0.2f, 0.5f));
@@ -114,7 +108,6 @@ public class Map implements Drawable, ActionListener{
 		g.drawImage(d.pic, d.posX,d.posY, null);*/
 		g.setFont(new Font("Ariel",20, 20));
 		g.drawString("Count Down: "+timeLeft, 0, 490);
-		g.drawString("Score: "+score, 400, 490);
 		//System.out.println("hit");
 	}
 
