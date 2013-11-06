@@ -1,0 +1,17 @@
+import java.util.ArrayList;
+
+
+public class CarSpawn extends Spawn {
+	public ArrayList<Car> cars = new ArrayList<Car>();
+	public CarSpawn(int x,int y){
+		super(x,y);
+	}
+	public void run(){
+		counter++;
+		System.out.println(counter);
+		if(counter%70==0){
+			Car c = new Car(map, x, y);
+			map.grid[x][y].contents.add(c);
+		}
+	}
+}

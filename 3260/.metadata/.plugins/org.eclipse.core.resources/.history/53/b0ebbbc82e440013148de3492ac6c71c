@@ -1,0 +1,42 @@
+
+
+public class Log extends Sprite{
+	public Map map;
+	public int counter = 0;
+	public Log(Map m,int x,int y){
+		if(x<5){
+			super(Frogger.class.getResource("log.png"),x,y);
+		}else{
+			super(Frogger.class.getResource("log.png"),x,y);
+		}
+		map = m;
+		
+	}
+	
+	public boolean move(int x,int y) {
+		boolean fail=false;
+		this.map.grid[posY][posX].contents.remove(this);
+		this.posX+=x;
+		this.posY+=y;
+		if(posX<0||posX>=map.gridWidth||posY<0||posY>=map.gridHeight){
+			fail=true;
+		}
+		if(fail){
+			this.posX-=x;
+			this.posY-=y;
+		}
+		
+		if(map.grid[posY-y][posX-x].contents.contains(Player.player)){
+			Player.player.move(x, y);
+		}
+		
+		this.map.grid[posY][posX].contents.add(this);
+		this.map.parentFrame.repaint();
+		return fail;
+	}
+	
+	public boolean run(boolean left){
+		counter++;
+		return this.move(left?-1:1, 0);
+	}
+}

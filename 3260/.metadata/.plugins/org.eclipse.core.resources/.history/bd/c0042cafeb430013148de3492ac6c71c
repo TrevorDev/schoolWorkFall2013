@@ -1,0 +1,42 @@
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+
+
+
+/**
+	 * Gets the input from the keyboard
+	 */
+public class Input extends JComponent {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static boolean up,down,left,right,upU,downU,leftU,rightU;
+	public Input(){
+		System.out.println("fd");
+		SampleAction a = new SampleAction();
+		this.getActionMap().put("bar", a);
+		this.getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "bar");
+	}
+	class SampleAction extends AbstractAction {
+
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("HITTT"+e.ACTION_PERFORMED);
+        }
+    }
+}
+
+

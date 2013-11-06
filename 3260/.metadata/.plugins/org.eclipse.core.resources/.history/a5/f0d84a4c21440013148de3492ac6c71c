@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+
+public class CarSpawn extends Spawn {
+	public ArrayList<Car> cars = new ArrayList<Car>();
+	public int creating = 0;
+	public CarSpawn(Map map,int x,int y){
+		super(map,x,y);
+	}
+	public void run(){
+		counter++;
+		for(int i=0;i<cars.size();i++){
+			if(cars.get(i).run()){
+				map.grid[cars.get(i).posY][cars.get(i).posX].contents.remove(cars.get(i));
+				cars.remove(cars.get(i));
+				i--;
+			}
+		}
+		
+		if((counter%10==0)||creating%2!=0){
+			Car c = new Car(map, x, y);
+			map.grid[y][x].contents.add(c);
+			cars.add(c);
+			creating++;
+			if(creating%2==0){
+				System.out.println("done");
+				this.resetCounter();
+			}
+		}
+		
+	}
+}

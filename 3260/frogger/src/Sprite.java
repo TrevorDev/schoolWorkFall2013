@@ -1,6 +1,8 @@
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,24 +15,29 @@ import javax.imageio.ImageIO;
  * @author trevor
  * 
  */
-public class Sprite {
+public class Sprite implements Drawable{
 	public double rot = 0;
 	public int posX = 0;
 	public int posY = 0;
-	public int gridX = 0;
-	public int gridY = 0;
-	public boolean onGrid = true;
 	public BufferedImage pic;
 
 	/**
 	 * creates a sprite with a specified picture
 	 */
-	public Sprite(URL im) {
+	public Sprite(URL im,int x, int y, int height,int width) {
+		posX=x;
+		posY=y;
 		try {
-			pic = ImageIO.read(im);
+			pic = resize(ImageIO.read(im),width,height);
 		} catch (IOException e) {
 			System.out.println("cant open pic");
 		}
+	}
+	
+	public Sprite(BufferedImage im,int x, int y) {
+		posX=x;
+		posY=y;
+		pic = im;
 	}
 	
 	/**
@@ -39,20 +46,6 @@ public class Sprite {
 	public void setPos(int[] x){
 		posX=x[0];
 		posY=x[1];
-	}
-
-	/**
-	 * Checks if posx and posy are on the grid
-	 */
-	public void calcGrid() {
-		/*int[] test = Board.board.getGridCo(this.posX, this.posY);
-    	if(test[2]==0){
-    		onGrid=true;
-    		this.gridX=test[0];
-    		this.gridY=test[1];
-    	}else{
-    		onGrid=false;
-    	}*/
 	}
 	
 	/**
@@ -76,5 +69,26 @@ public class Sprite {
 		g.drawRenderedImage(pic, null);
 		g.dispose();
 		this.pic = result;
+	}
+
+
+	
+	private static BufferedImage resize(BufferedImage source,
+            int width, int height) {
+        BufferedImage img = new BufferedImage(width, height,
+                source.getType());
+        Graphics2D g = img.createGraphics();
+        try {
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+            g.drawImage(source, 0, 0, width, height, null);
+        } finally {
+            g.dispose();
+        }
+        return img;
+    }
+	
+	@Override
+	public void draw(Graphics g, int x, int y, int width, int height) {
+		
 	}
 }

@@ -1,0 +1,93 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+
+
+public class Player extends Sprite implements KeyListener{
+	public Map map;
+	public Player player;
+	public Player(Map m,int x,int y){
+		super(Frogger.class.getResource("dot.png"),x,y);
+		map = m;
+		player = this;
+		m.parentFrame.add(this);
+		
+		
+		
+		/*Input.input.getActionMap().put("MovePlayerLeft", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.map.grid[posY][posX].contents.remove(player);
+				player.posX--;
+				player.map.grid[posY][posX].contents.add(player);
+				player.map.parentFrame.repaint();
+			}
+		});
+		
+		Input.input.getActionMap().put("MovePlayerRight", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.map.grid[posY][posX].contents.remove(player);
+				player.posX++;
+				player.map.grid[posY][posX].contents.add(player);
+				player.map.parentFrame.repaint();
+			}
+		});
+		
+		Input.input.getActionMap().put("MovePlayerUp", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.map.grid[posY][posX].contents.remove(player);
+				player.posY--;
+				player.map.grid[posY][posX].contents.add(player);
+				player.map.parentFrame.repaint();
+			}
+		});
+		
+		Input.input.getActionMap().put("MovePlayerDown", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.map.grid[posY][posX].contents.remove(player);
+				player.posY++;
+				player.map.grid[posY][posX].contents.add(player);
+				player.map.parentFrame.repaint();
+			}
+		});
+		
+		Input.input.getInputMap().put(KeyStroke.getKeyStroke("LEFT"), "MovePlayerLeft");
+		Input.input.getInputMap().put(KeyStroke.getKeyStroke("RIGHT"), "MovePlayerRight");
+		Input.input.getInputMap().put(KeyStroke.getKeyStroke("UP"), "MovePlayerUp");
+		Input.input.getInputMap().put(KeyStroke.getKeyStroke("DOWN"), "MovePlayerDown");*/
+	}
+	
+	public void setPos(int[] x){
+		posX=x[0];
+		posY=x[1];
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		System.out.println(arg0);
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		System.out.println(arg0);
+		
+	}
+}

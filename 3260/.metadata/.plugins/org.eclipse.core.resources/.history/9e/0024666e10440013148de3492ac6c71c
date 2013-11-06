@@ -1,0 +1,29 @@
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+
+
+
+/**
+	 * Gets the input from the keyboard
+	 */
+public class Input extends KeyAdapter {
+
+	public static Input input;
+	public Input(){
+		input=this;
+		System.out.println("fdsf");
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		 
+        int key = e.getKeyCode();
+
+            Player.player.moveLeft();
+        
+
+        
+    }
+}
+
+

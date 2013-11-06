@@ -1,0 +1,24 @@
+
+
+public class Player extends Sprite{
+	public Map map;
+	public static Player player;
+	public Player(Map m,int x,int y){
+		super(Frogger.class.getResource("dot.png"),x,y);
+		map = m;
+		player = this;
+		
+	}
+	
+	public void move(int x,int y) {
+		bool fail=false;
+		player.map.grid[posY][posX].contents.remove(player);
+		player.posX+=x;
+		player.posY+=y;
+		if(posX<0||posX>=map.gridWidth||){
+			
+		}
+		player.map.grid[posY][posX].contents.add(player);
+		player.map.parentFrame.repaint();
+	}
+}

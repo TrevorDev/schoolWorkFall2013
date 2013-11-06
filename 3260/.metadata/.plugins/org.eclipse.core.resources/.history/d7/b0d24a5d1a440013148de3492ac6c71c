@@ -1,0 +1,9 @@
+import java.util.ArrayList;
+
+
+public class CarSpawn extends Spawn {
+	public ArrayList<Car> cars = new ArrayList<Car>();
+	public CarSpawn(int x,int y){
+		super(x,y);
+	}
+}

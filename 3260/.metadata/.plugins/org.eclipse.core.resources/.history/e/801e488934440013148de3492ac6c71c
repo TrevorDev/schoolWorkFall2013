@@ -1,0 +1,99 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
+/**
+ * Sprite containing picture and position of objects
+ * @author trevor
+ * 
+ */
+public class Sprite implements Drawable{
+	public double rot = 0;
+	public int posX = 0;
+	public int posY = 0;
+	public BufferedImage pic;
+
+	/**
+	 * creates a sprite with a specified picture
+	 */
+	public Sprite(URL im,int x, int y) {
+		posX=x;
+		posY=y;
+		try {
+			pic = ImageIO.read(im);
+			pic.
+		} catch (IOException e) {
+			System.out.println("cant open pic");
+		}
+	}
+	
+	public Sprite(BufferedImage im,int x, int y) {
+		posX=x;
+		posY=y;
+		pic = im;
+	}
+	
+	/**
+	 * Sets position of the sprite
+	 */
+	public void setPos(int[] x){
+		posX=x[0];
+		posY=x[1];
+	}
+	
+	/**
+	 * Rotates the image of the sprite to a certain degree
+	 */
+	public void rotate(double degree) {
+		double angle = (rot-degree) / 180 * Math.PI;
+		rot=degree;
+		double sin = Math.abs(Math.sin(angle)), cos = Math.abs(Math.cos(angle));
+		int w = pic.getWidth(), h = pic.getHeight();
+		int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math
+				.floor(h * cos + w * sin);
+		GraphicsConfiguration gc = GraphicsEnvironment
+				.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration();
+		BufferedImage result = gc.createCompatibleImage(neww, newh,
+				Transparency.TRANSLUCENT);
+		Graphics2D g = result.createGraphics();
+		g.translate((neww - w) / 2, (newh - h) / 2);
+		g.rotate(angle, w / 2, h / 2);
+		g.drawRenderedImage(pic, null);
+		g.dispose();
+		this.pic = result;
+	}
+
+	public BufferedImage resize(BufferedImage source,
+            int width, int height) {
+        return commonResize(source, width, height,
+                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+    }
+	
+	private static BufferedImage commonResize(BufferedImage source,
+            int width, int height, Object hint) {
+        BufferedImage img = new BufferedImage(width, height,
+                source.getType());
+        Graphics2D g = img.createGraphics();
+        try {
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
+            g.drawImage(source, 0, 0, width, height, null);
+        } finally {
+            g.dispose();
+        }
+        return img;
+    }
+	
+	@Override
+	public void draw(Graphics g, int x, int y, int width, int height) {
+		
+	}
+}

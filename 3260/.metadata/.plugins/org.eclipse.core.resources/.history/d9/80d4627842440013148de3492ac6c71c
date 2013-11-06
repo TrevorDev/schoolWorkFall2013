@@ -1,0 +1,140 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+
+
+public class Map implements Drawable, ActionListener{
+	class gridElement {
+	    public ArrayList<Sprite> contents = new ArrayList<Sprite>();
+	}
+	
+	public gridElement[][] grid;
+	public int gridWidth=0;
+	public int gridHeight=0;
+	public int timeLeft = 30;
+	public JFrame parentFrame;
+	public ArrayList<CarSpawn> carSpawners = new ArrayList<CarSpawn>();
+	public ArrayList<LogSpawn> logSpawners = new ArrayList<LogSpawn>();
+	public Timer timer;
+	public boolean gameOver = false;
+	private final int DELAY = 500;
+	public Map(int x, int y,JFrame parentFrame){
+		
+		this.parentFrame = parentFrame;
+		grid = new gridElement[y][x];
+		gridWidth=x;
+		gridHeight=y;
+		try {
+			String strLine;
+			BufferedReader in = new BufferedReader(new FileReader("map"));
+			int i = 0;
+			while ((strLine = in.readLine()) != null) {
+				for (int j = 0; j < strLine.length(); j++) {
+					grid[i][j]=new gridElement();
+					if(strLine.charAt(j)=='F'){
+						Player p = new Player(this,j,i);
+						grid[i][j].contents.add(p);
+					} else if(strLine.charAt(j)=='C'){
+						CarSpawn s = new CarSpawn(this,j,i,true);
+						carSpawners.add(s);
+					} else if(strLine.charAt(j)=='D'){
+						CarSpawn s = new CarSpawn(this,j,i,false);
+						carSpawners.add(s);
+					} else if(strLine.charAt(j)=='L'){
+						LogSpawn s = new LogSpawn(this,j,i,true);
+						logSpawners.add(s);
+					} else if(strLine.charAt(j)=='B'){
+						LogSpawn s = new LogSpawn(this,j,i,false);
+						logSpawners.add(s);
+					} else if(strLine.charAt(j)=='X'){
+						WinNode n = new WinNode(this,j,i);
+						this.grid[i][j].contents.add(n);
+					}
+				}
+				i++;
+			}
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		timer = new Timer(DELAY, this);
+        timer.start();
+	}
+
+	/**
+     * Gets a global coordinate from the grid coordinate
+     */
+    public int[] getCo(int x, int y) {
+        int[] ret = new int[2];
+        ret[0] = (500 / gridWidth) * x;
+        ret[1] = (500 / gridHeight) * y;
+        return ret;
+    }
+	
+	@Override
+	public void draw(Graphics g,int x, int y,int width, int height) {
+		g.setColor(new Color(0.2f, 0.4f, 0.2f));
+		g.fillRect(0, 0, 500, 500);
+		g.setColor(new Color(0.2f, 0.2f, 0.5f));
+		g.fillRect(0, 40, 500, 145);
+		g.setColor(new Color(0.2f, 0.2f, 0.2f));
+		g.fillRect(0, 220, 500, 245);
+		for(int i=0;i<gridHeight;i++){
+			for(int j=0;j<gridWidth;j++){
+				//System.out.println(i+" "+j+" "+grid[i][j].contents.size());
+				for(int k=0;k<grid[i][j].contents.size();k++){
+					Sprite s = grid[i][j].contents.get(k);
+					int[] pos = getCo(s.posX,s.posY);
+					g.drawImage(s.pic, pos[0],pos[1], null);
+				}
+			}
+		}
+		int[] pos = getCo(Player.player.posX,Player.player.posY);
+		g.drawImage(Player.player.pic, pos[0],pos[1], null);
+		/*Sprite d = new Sprite(Frogger.class.getResource("pac.png"));
+		d.setPos(getCo(0,0));
+		g.drawImage(d.pic, d.posX,d.posY,width/gridWidth,height/gridHeight, null);
+		d.setPos(getCo(1,0));
+		g.drawImage(d.pic, d.posX,d.posY, null);*/
+		g.setFont(new Font("Ariel",20, 20));
+		g.drawString("Count Down: "+timeLeft, 0, 490);
+		//System.out.println("hit");
+	}
+
+	public void gameOver(){
+		gameOver=true;
+		JOptionPane.showMessageDialog(this.parentFrame, "You Lose!");
+		System.out.println("ffff");
+		this.parentFrame.dispose();
+		Frogger.start();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		timeLeft--;
+		if(timeLeft==0){
+			gameOver=true;
+			gameOver();
+		}
+		if(!gameOver){
+			for(int i=0;i<carSpawners.size();i++){
+				carSpawners.get(i).run();
+			}
+			for(int i=0;i<logSpawners.size();i++){
+				logSpawners.get(i).run();
+			}
+		
+			this.parentFrame.repaint();
+		}
+	}
+}

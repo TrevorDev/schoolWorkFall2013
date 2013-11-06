@@ -1,0 +1,6 @@
+
+public class CarSpawn extends Spawn {
+	public CarSpawn(int x,int y){
+		super(x,y);
+	}
+}

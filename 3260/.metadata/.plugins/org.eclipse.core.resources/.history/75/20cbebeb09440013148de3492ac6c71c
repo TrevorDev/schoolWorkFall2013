@@ -1,0 +1,29 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+
+
+
+/**
+	 * Gets the input from the keyboard
+	 */
+public class Input extends JComponent {
+	/**
+	 * 
+	 */
+	public static Input input;
+	private static final long serialVersionUID = 1L;
+	public static boolean up,down,left,right,upU,downU,leftU,rightU;
+	public Input(){
+		input=this;
+	}
+}
+
+

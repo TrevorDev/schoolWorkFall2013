@@ -1,0 +1,26 @@
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+
+
+public class Player extends Sprite{
+	public Map map;
+	public Player player;
+	public Player(Map m,int x,int y){
+		super(Frogger.class.getResource("dot.png"),x,y);
+		map = m;
+		player = this;
+		
+	}
+	
+	public void moveLeft() {
+		player.map.grid[posY][posX].contents.remove(player);
+		player.posX--;
+		player.map.grid[posY][posX].contents.add(player);
+		player.map.parentFrame.repaint();
+	}
+}

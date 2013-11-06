@@ -1,0 +1,10 @@
+
+public abstract class Spawn {
+	public Map map;
+	public int x;
+	public int y;
+	public Spawn(int x,int y){
+		this.x=x;
+		this.y=y;
+	}
+}

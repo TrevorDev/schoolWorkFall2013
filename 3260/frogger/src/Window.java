@@ -17,7 +17,6 @@ public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public ArrayList<Drawable> drawList = new ArrayList<Drawable>();
 	public Window(String title, int x, int y) {
-		this.addKeyListener(new Input());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(x, y);
         setLocationRelativeTo(null);
@@ -37,7 +36,7 @@ public class Window extends JFrame {
 		super.paint(g);
 		
 		for(Drawable x : drawList){
-			x.draw(g);
+			x.draw(g,0,0,this.getWidth(),this.getHeight());
 		}
 		//g.drawImage(player.pic, player.posX, player.posY, this);
 

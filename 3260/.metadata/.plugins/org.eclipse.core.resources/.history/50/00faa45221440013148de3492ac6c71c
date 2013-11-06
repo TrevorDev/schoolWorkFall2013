@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+
+public class LogSpawn extends Spawn {
+	public ArrayList<Log> logs = new ArrayList<Log>();
+	public int creating = 0;
+	public LogSpawn(Map map,int x,int y){
+		super(map,x,y);
+	}
+	public void run(){
+		counter++;
+		for(int i=0;i<logs.size();i++){
+			if(logs.get(i).run()){
+				map.grid[logs.get(i).posY][logs.get(i).posX].contents.remove(logs.get(i));
+				logs.remove(logs.get(i));
+				i--;
+			}
+		}
+		
+		if((counter%10==0)||creating%2!=0){
+			Car c = new Car(map, x, y);
+			map.grid[y][x].contents.add(c);
+			cars.add(c);
+			creating++;
+			if(creating%2==0){
+				System.out.println("done");
+				this.resetCounter();
+			}
+		}
+		
+	}
+}

@@ -1,0 +1,18 @@
+
+public abstract class Spawn {
+	public Map map;
+	public int x;
+	public int y;
+	public int counter = 0;
+	public Spawn(Map map,int x,int y){
+		this.map = map;
+		this.x=x;
+		this.y=y;
+	}
+	public void resetCounter(){
+		this.counter = (int)(Math.random()*100);
+	}
+	public void run(){
+		
+	}
+}
